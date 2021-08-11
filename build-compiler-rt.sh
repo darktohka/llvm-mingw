@@ -93,16 +93,17 @@ for arch in $ARCHS; do
         -DCMAKE_SYSTEM_NAME=Windows \
         -DCMAKE_AR="$PREFIX/bin/llvm-ar" \
         -DCMAKE_RANLIB="$PREFIX/bin/llvm-ranlib" \
-        -DCMAKE_C_COMPILER_TARGET=$arch-windows-gnu \
+        -DCMAKE_C_COMPILER_TARGET=$arch-w64-windows-gnu \
         -DCOMPILER_RT_DEFAULT_TARGET_ONLY=TRUE \
         -DCOMPILER_RT_USE_BUILTINS_LIBRARY=TRUE \
         -DSANITIZER_CXX_ABI=libc++ \
+        -DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=TRUE \
         $SRC_DIR
     $BUILDCMD ${CORES+-j$CORES}
     $BUILDCMD install
     mkdir -p "$PREFIX/$arch-w64-mingw32/bin"
     if [ -n "$SANITIZERS" ]; then
-        mv "$CLANG_RESOURCE_DIR/lib/windows/"*.dll "$PREFIX/$arch-w64-mingw32/bin"
+        mv "$CLANG_RESOURCE_DIR/lib/$arch-w64-windows-gnu/"*.dll "$PREFIX/$arch-w64-mingw32/bin"
     fi
     cd ..
 done
