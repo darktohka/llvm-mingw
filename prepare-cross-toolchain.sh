@@ -40,9 +40,18 @@ done
 cp -a $CLANG_RESOURCE_DIR/lib $DEST/lib/clang/$CLANG_VERSION
 rm -rf $DEST/include
 cp -a $SRC/generic-w64-mingw32/include $DEST/include
+if [ -d $SRC/include/c++ ]; then
+    cp -a $SRC/include/c++ $DEST/include
+fi
 for arch in $ARCHS; do
     mkdir -p $DEST/$arch-w64-mingw32
     for subdir in bin lib; do
         cp -a $SRC/$arch-w64-mingw32/$subdir $DEST/$arch-w64-mingw32
     done
+    if [ -d $SRC/include/$arch-w64-windows-gnu ]; then
+        cp -a $SRC/include/$arch-w64-windows-gnu $DEST/include
+    fi
+    if [ -d $SRC/lib/$arch-w64-windows-gnu ]; then
+        cp -a $SRC/lib/$arch-w64-windows-gnu $DEST/lib
+    fi
 done
