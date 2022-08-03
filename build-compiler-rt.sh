@@ -81,6 +81,7 @@ for arch in $ARCHS; do
     fi
 
     [ -z "$CLEAN" ] || rm -rf build-$arch$BUILD_SUFFIX
+    [ -z "$RECONF" ] || rm -rf build-$arch$BUILD_SUFFIX/CMake*
     mkdir -p build-$arch$BUILD_SUFFIX
     cd build-$arch$BUILD_SUFFIX
     cmake \

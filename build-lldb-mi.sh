@@ -111,6 +111,7 @@ fi
 cd lldb-mi
 
 [ -z "$CLEAN" ] || rm -rf $BUILDDIR
+[ -z "$RECONF" ] || rm -rf $BUILDDIR/CMake*
 mkdir -p $BUILDDIR
 cd $BUILDDIR
 cmake \

@@ -69,6 +69,7 @@ for arch in $ARCHS; do
     esac
 
     [ -z "$CLEAN" ] || rm -rf build-$arch
+    [ -z "$RECONF" ] || rm -rf build-$arch/CMake*
     mkdir -p build-$arch
     cd build-$arch
 

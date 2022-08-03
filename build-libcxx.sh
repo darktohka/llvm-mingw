@@ -76,6 +76,7 @@ fi
 
 for arch in $ARCHS; do
     [ -z "$CLEAN" ] || rm -rf build-$arch
+    [ -z "$RECONF" ] || rm -rf build-$arch/CMake*
     mkdir -p build-$arch
     cd build-$arch
     cmake \

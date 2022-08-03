@@ -288,6 +288,7 @@ else
 fi
 
 [ -z "$CLEAN" ] || rm -rf $BUILDDIR
+[ -z "$RECONF" ] || rm -rf $BUILDDIR/CMake*
 mkdir -p $BUILDDIR
 cd $BUILDDIR
 # Building LLDB for macOS fails unless building libc++ is enabled at the
