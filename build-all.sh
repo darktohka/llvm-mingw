@@ -18,6 +18,7 @@ set -e
 
 LLVM_ARGS=""
 MINGW_ARGS=""
+MINGW_TOOLS_ARGS=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -47,6 +48,10 @@ while [ $# -gt 0 ]; do
     --with-default-win32-winnt=*)
         MINGW_ARGS="$MINGW_ARGS $1"
         ;;
+    --skip-include-triplet-prefix)
+        MINGW_ARGS="$MINGW_ARGS $1"
+        MINGW_TOOLS_ARGS="$MINGW_TOOLS_ARGS $1"
+        ;;
     *)
         if [ -n "$PREFIX" ]; then
             echo Unrecognized parameter $1
@@ -58,7 +63,7 @@ while [ $# -gt 0 ]; do
     shift
 done
 if [ -z "$PREFIX" ]; then
-    echo $0 [--enable-asserts] [--disable-dylib] [--full-llvm] [--with-python] [--symlink-projects] [--disable-lldb] [--disable-lldb-mi] [--disable-clang-tools-extra] [--host=triple] [--with-default-win32-winnt=0x601] [--with-default-msvcrt=ucrt] dest
+    echo $0 [--enable-asserts] [--disable-dylib] [--full-llvm] [--with-python] [--symlink-projects] [--disable-lldb] [--disable-lldb-mi] [--disable-clang-tools-extra] [--host=triple] [--with-default-win32-winnt=0x601] [--with-default-msvcrt=ucrt] [--skip-include-triplet-prefix] dest
     exit 1
 fi
 
@@ -78,7 +83,7 @@ if [ -z "$FULL_LLVM" ]; then
 fi
 ./install-wrappers.sh $PREFIX
 ./build-mingw-w64.sh $PREFIX $MINGW_ARGS
-./build-mingw-w64-tools.sh $PREFIX
+./build-mingw-w64-tools.sh $PREFIX $MINGW_TOOLS_ARGS
 ./build-compiler-rt.sh $PREFIX
 ./build-libcxx.sh $PREFIX
 ./build-mingw-w64-libraries.sh $PREFIX
