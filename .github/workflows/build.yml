@@ -13,7 +13,7 @@ jobs:
   # slightly more, when we know a separate build of the same version but with
   # assertions enabled, has passed some amount of tests.
   get-versions:
-    if: (github.event_name != 'schedule') || (github.repository == 'mstorsjo/llvm-mingw')
+    if: true
     runs-on: ubuntu-latest
     steps:
       - name: Touch file
@@ -109,11 +109,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/download-artifact@v3
-        if: github.event_name == 'schedule'
+        if: true
         with:
           name: versions
       - name: Set build env vars
-        if: github.event_name == 'schedule'
+        if: true
         run: |
           . versions
           echo Building llvm-project $LLVM_VERSION mingw-w64 $MINGW_W64_VERSION
